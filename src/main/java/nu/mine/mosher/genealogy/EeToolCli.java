@@ -12,6 +12,7 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 @Slf4j
 public class EeToolCli {
     public static void main(final String... args) throws Gnopt.InvalidOption {
@@ -22,6 +23,8 @@ public class EeToolCli {
         System.out.flush();
         System.err.flush();
     }
+
+    private boolean fac;
 
     public void __(final Optional<String> url) throws URISyntaxException, IOException, InterruptedException, NetUtils.NonJsonResponse, TransformerException {
         val uri = new URI(url.get());
@@ -41,9 +44,15 @@ public class EeToolCli {
             if (path.startsWith("/books/")) {
                 h = new GoogleBooks(uri);
             }
-        } else if (host.equals("\"discovery.nationalarchives.gov.uk\"")) {
+        } else if (host.equals("discovery.nationalarchives.gov.uk")) {
             h = new Tna(uri);
+        } else if (host.equals("www.british-history.ac.uk")) {
+            h = new Bho(uri);
         }
+        // TODO: Open Library
+
+
+
 
         if (Objects.isNull(h)) {
             log.warn("Unknown type of URL.");
@@ -63,5 +72,9 @@ public class EeToolCli {
 
         System.err.flush();
         Arrays.stream(new String[]{"",s,"",s2,""}).forEach(System.out::println);
+    }
+
+    public void fac(final Optional<String> arg) {
+        this.fac = true;
     }
 }

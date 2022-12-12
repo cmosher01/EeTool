@@ -11,17 +11,23 @@ group = 'nu.mine.mosher.genealogy'
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri('https://public:\u0067hp_fya6Kseu3XOBMg2icbg7f1LP6ZFYjj35v4Zj@maven.pkg.github.com/cmosher01/*')
+    }
 }
 
 dependencies {
-    implementation group: 'nu.mine.mosher.gnopt', name: 'Gnopt', version: 'latest.integration'
+    implementation group: 'nu.mine.mosher.gnopt', name: 'gnopt', version: 'latest.release'
+    implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: 'latest.release'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: 'latest.release'
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: 'latest.release'
     implementation group: 'com.jayway.jsonpath', name: 'json-path', version: 'latest.release'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: 'latest.release'
+
     runtimeOnly group: 'xerces', name: 'xercesImpl', version: 'latest.release', {
         exclude group: 'xml-apis'
     }
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: 'latest.release'
+    runtimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: 'latest.release'
 }
 
 
@@ -33,5 +39,5 @@ java {
 }
 
 application {
-    mainClass.set 'nu.mine.mosher.genealogy.EeToolCli'
+    mainClass = 'nu.mine.mosher.genealogy.EeToolCli'
 }
